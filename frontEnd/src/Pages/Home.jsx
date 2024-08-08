@@ -14,7 +14,7 @@ function Home() {
         <h2 className="sr-only">Features</h2>
         <div className="feature-item">
           <img
-            src="./img/icon-chat.png"
+            src="./designs/img/icon-chat.png"
             alt="Chat Icon"
             className="feature-icon"
           />
@@ -26,7 +26,7 @@ function Home() {
         </div>
         <div className="feature-item">
           <img
-            src="./img/icon-money.png"
+            src="./designs/img/icon-money.png"
             alt="Chat Icon"
             className="feature-icon"
           />
@@ -39,7 +39,7 @@ function Home() {
         </div>
         <div className="feature-item">
           <img
-            src="./img/icon-security.png"
+            src="./designs/img/icon-security.png"
             alt="Chat Icon"
             className="feature-icon"
           />

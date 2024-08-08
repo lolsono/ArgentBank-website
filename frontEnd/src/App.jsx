@@ -5,11 +5,11 @@ import Navbar from "./components/NavBar.jsx";
 function App() {
   return (
     <>
+      <Navbar />
       <main>
-        <Navbar />
         <Routing />
-        <Footer />
       </main>
+      <Footer />
     </>
   );
 }

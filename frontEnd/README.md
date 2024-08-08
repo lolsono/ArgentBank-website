@@ -14,3 +14,15 @@ Currently, two official plugins are available:
 -npm install react-router-dom
 
 -pour voir si tout marche npm run dev
+
+optionnel ajout des icone fontawesome
+en icone indiduel import
+<FontAwesomeIcon icon={faCircleUser} />
+
+avec import comme ca :
+import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+(npm install --save @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome)
+
+Pour ajout le système saas
