@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function SignIn() {
   return (
-    <div className="main bg-dark">
+    <div className="signin-containner bg-dark">
       <section className="sign-in-content">
         <FontAwesomeIcon icon={faCircleUser} />
         <h1>Sign In</h1>
