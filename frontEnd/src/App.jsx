@@ -8,12 +8,12 @@ import Navbar from "./components/NavBar.jsx";
 
 function App() {
   const location = useLocation();
-  const isSignInPage = location.pathname === "/signIn";
+  const isSpecialPage = ["/signIn", "/connect"].includes(location.pathname);
 
   return (
     <>
       <Navbar />
-      <main className={isSignInPage ? "main-signIn" : ""}>
+      <main className={isSpecialPage ? "main-signIn" : ""}>
         <Routing />
       </main>
       <Footer />

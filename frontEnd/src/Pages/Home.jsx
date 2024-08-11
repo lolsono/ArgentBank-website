@@ -30,6 +30,7 @@ function Home() {
             alt="Chat Icon"
             className="feature-icon"
           />
+
           <h3 className="feature-item-title">
             More savings means higher rates
           </h3>

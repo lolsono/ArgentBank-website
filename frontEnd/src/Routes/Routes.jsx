@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import ErrorPages404 from "../Pages/Error404Page.jsx";
 import Home from "../Pages/Home.jsx";
+import Islogged from "../Pages/IsLogged.jsx";
 import SignIn from "../Pages/SignIn.jsx";
-
 function Routing() {
   return (
     <>
@@ -11,6 +11,7 @@ function Routing() {
         <Route path="/lodging/*" element={<ErrorPages404 />} />
         <Route path="*" element={<ErrorPages404 />} />
         <Route path="/signIn" element={<SignIn />} />
+        <Route path="/connect" element={<Islogged />} />
       </Routes>
     </>
   );
