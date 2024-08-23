@@ -1,4 +1,7 @@
 function Islogged() {
+
+  // partie de gestion une fois log
+
   return (
     <>
       <div className="header">

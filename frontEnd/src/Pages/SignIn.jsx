@@ -3,33 +3,61 @@ import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 
-function SignIn() {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    rememberMe: false,
+const API_BASE_URL = "http://localhost:3001";
+
+// fonction fetch methode post pour la connexion
+
+export const loginUser = async (credentials) => {
+  const response = await fetch(`${API_BASE_URL}/api/v1/user/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
   });
 
-  const [showError, setShowError] = useState(false);
+  if (!response.ok) {
+    throw new Error('Login failed');
+  }
+
+  const user = await response.json();
+  return user;
+};
+
+// gère les reposer de la demande de connexion 
+export const handleLoginResponse = (user) => {
+  console.log("User data:", user);
+  // Stocker le token dans le localStorage
+  localStorage.setItem('token', user.token);
+  // mettre à jour le store Redux 
+};
+
+// fonction de bases
+function SignIn() {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     });
   };
 
-  //soumission du formulaire
-  const handleSubmit = (e) => {
+  // Soumission du formulaire
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.username && formData.password) {
-      console.log("Form data:", formData);
-      // Réinitialiser l'erreur si le formulaire est valide
-      setShowError(false);
+    if (formData.email && formData.password) {
+      try {
+        const user = await loginUser({ email: formData.email, password: formData.password });
+        handleLoginResponse(user);
+      } catch (error) {
+        console.error("Error:", error);
+      }
     } else {
-      // Afficher l'erreur si le formulaire est invalide
-      setShowError(true);
       console.log("Please complete all fields.");
     }
   };
@@ -39,18 +67,14 @@ function SignIn() {
       <FontAwesomeIcon icon={faCircleUser} />
       <h1>Sign In</h1>
 
-      {showError && (
-        <p className="error-message">Please complete all fields.</p>
-      )}
-
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="email">Email</label>
           <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
           />
         </div>
@@ -64,17 +88,6 @@ function SignIn() {
             onChange={handleChange}
           />
         </div>
-        <div className="input-remember">
-          <input
-            type="checkbox"
-            id="remember-me"
-            name="rememberMe"
-            checked={formData.rememberMe}
-            onChange={handleChange}
-          />
-          <label htmlFor="remember-me">Remember me</label>
-        </div>
-
         <button className="sign-in-button" type="submit">
           Sign In
         </button>
