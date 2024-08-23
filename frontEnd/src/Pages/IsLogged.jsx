@@ -2,6 +2,10 @@ function Islogged() {
 
   // partie de gestion une fois log
 
+  //dès que je suis connecter récuperer tout les information de l utilisateur pour les affichée
+
+  
+
   return (
     <>
       <div className="header">

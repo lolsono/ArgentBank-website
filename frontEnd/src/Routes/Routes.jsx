@@ -11,7 +11,7 @@ function Routing() {
         <Route path="/lodging/*" element={<ErrorPages404 />} />
         <Route path="*" element={<ErrorPages404 />} />
         <Route path="/signIn" element={<SignIn />} />
-        <Route path="/connect" element={<Islogged />} />
+        <Route path="/users" element={<Islogged />} />
       </Routes>
     </>
   );

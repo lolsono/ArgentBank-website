@@ -2,11 +2,13 @@
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const API_BASE_URL = "http://localhost:3001";
 
 // fonction fetch methode post pour la connexion
-
+// fonction fetch methode post pour la connexion
+// fonction fetch methode post pour la connexion
 export const loginUser = async (credentials) => {
   const response = await fetch(`${API_BASE_URL}/api/v1/user/login`, {
     method: 'POST',
@@ -21,15 +23,22 @@ export const loginUser = async (credentials) => {
   }
 
   const user = await response.json();
+  console.log("API response:", user); // Ajoutez ce log pour vérifier la réponse de l'API
   return user;
 };
 
-// gère les reposer de la demande de connexion 
-export const handleLoginResponse = (user) => {
+// gère les reposer de la demande de connexion
+export const handleLoginResponse = async (user, navigate) => {
   console.log("User data:", user);
+  if (!user.body || !user.body.token) {
+    console.error("Token is undefined in the API response");
+    return;
+  }
   // Stocker le token dans le localStorage
-  localStorage.setItem('token', user.token);
-  // mettre à jour le store Redux 
+  await localStorage.setItem('token', user.body.token);
+  console.log("Token stored in localStorage:", localStorage.getItem('token'));
+  // Rediriger vers la page des utilisateurs
+  navigate('/users');
 };
 
 // fonction de bases
@@ -38,6 +47,8 @@ function SignIn() {
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -53,7 +64,7 @@ function SignIn() {
     if (formData.email && formData.password) {
       try {
         const user = await loginUser({ email: formData.email, password: formData.password });
-        handleLoginResponse(user);
+        handleLoginResponse(user, navigate);
       } catch (error) {
         console.error("Error:", error);
       }

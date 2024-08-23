@@ -8,7 +8,7 @@ import Navbar from "./components/NavBar.jsx";
 
 function App() {
   const location = useLocation();
-  const isSpecialPage = ["/signIn", "/connect"].includes(location.pathname);
+  const isSpecialPage = ["/signIn", "/users"].includes(location.pathname);
 
   return (
     <>
