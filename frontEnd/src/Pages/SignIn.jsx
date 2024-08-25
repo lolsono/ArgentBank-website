@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 const API_BASE_URL = "http://localhost:3001";
 
 // fonction fetch methode post pour la connexion
-// fonction fetch methode post pour la connexion
-// fonction fetch methode post pour la connexion
 export const loginUser = async (credentials) => {
   const response = await fetch(`${API_BASE_URL}/api/v1/user/login`, {
     method: 'POST',
@@ -23,20 +21,22 @@ export const loginUser = async (credentials) => {
   }
 
   const user = await response.json();
-  console.log("API response:", user); // Ajoutez ce log pour vérifier la réponse de l'API
   return user;
 };
 
 // gère les reposer de la demande de connexion
 export const handleLoginResponse = async (user, navigate) => {
+
+  //log du resultat de le requete
   console.log("User data:", user);
+
   if (!user.body || !user.body.token) {
     console.error("Token is undefined in the API response");
     return;
   }
   // Stocker le token dans le localStorage
   await localStorage.setItem('token', user.body.token);
-  console.log("Token stored in localStorage:", localStorage.getItem('token'));
+  console.log("Token:", localStorage.getItem('token'));
   // Rediriger vers la page des utilisateurs
   navigate('/users');
 };
@@ -48,6 +48,11 @@ function SignIn() {
     password: "",
   });
 
+  // etat du message d erreure
+  const [showError, setShowError] = useState(false);
+  const [incorrectField, setIncorrectField] = useState(false);
+
+  // pour la redirection ver la page de connexion
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -65,10 +70,20 @@ function SignIn() {
       try {
         const user = await loginUser({ email: formData.email, password: formData.password });
         handleLoginResponse(user, navigate);
+
+        //supression message erreur
+        setShowError(false);
       } catch (error) {
+        //message d erreur champs incorect
+        setIncorrectField(true)
+        setShowError(false);
         console.error("Error:", error);
       }
     } else {
+      // ajout message d'erreur visible pour l'utilisateur
+      setShowError(true);
+
+      //message dans la console 
       console.log("Please complete all fields.");
     }
   };
@@ -77,6 +92,14 @@ function SignIn() {
     <div className="sign-in-content">
       <FontAwesomeIcon icon={faCircleUser} />
       <h1>Sign In</h1>
+
+      {showError && (
+        <p className="error-message">Please complete all fields.</p>
+      )}
+
+      {incorrectField && (
+        <p className="error-message">Incorrect Fields.</p>
+      )}
 
       <form onSubmit={handleSubmit}>
         <div className="input-wrapper">

@@ -4,7 +4,7 @@ function Islogged() {
 
   //dès que je suis connecter récuperer tout les information de l utilisateur pour les affichée
 
-  
+  // changement des bouton et ajout du nom de l'utilisateur
 
   return (
     <>
