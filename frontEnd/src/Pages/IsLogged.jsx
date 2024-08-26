@@ -1,8 +1,35 @@
+
+import { API_BASE_URL } from "./SignIn";
+
+// fetch pour recupérer les information utilisateur 
+export const getInfoUser = async ( token ) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/v1/user/profile`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      },
+    });
+
+    const jsonResponse = await response.json();
+    console.log("info utilisateur:", jsonResponse);
+    return jsonResponse;
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+    throw error;
+  }
+};
+
+
 function Islogged() {
 
   // partie de gestion une fois log
 
   //dès que je suis connecter récuperer tout les information de l utilisateur pour les affichée
+  // part le route post user/profil
+
 
   // changement des bouton et ajout du nom de l'utilisateur
 

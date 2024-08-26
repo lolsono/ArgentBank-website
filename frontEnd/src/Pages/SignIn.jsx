@@ -3,8 +3,9 @@ import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getInfoUser } from "./IsLogged";
 
-const API_BASE_URL = "http://localhost:3001";
+export const API_BASE_URL = "http://localhost:3001";
 
 // fonction fetch methode post pour la connexion
 export const loginUser = async (credentials) => {
@@ -37,6 +38,17 @@ export const handleLoginResponse = async (user, navigate) => {
   // Stocker le token dans le localStorage
   await localStorage.setItem('token', user.body.token);
   console.log("Token:", localStorage.getItem('token'));
+
+  //recuperation du token 
+  const token = localStorage.getItem('token');
+
+    // Fetch pour récupérer les informations de l'utilisateur
+    try {
+      await getInfoUser(token);
+    } catch (error) {
+      console.error("Error fetching user info:", error);
+    }
+
   // Rediriger vers la page des utilisateurs
   navigate('/users');
 };
