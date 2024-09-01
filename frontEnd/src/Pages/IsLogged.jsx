@@ -1,8 +1,10 @@
-
 import { API_BASE_URL } from "./SignIn";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
-// fetch pour recupérer les information utilisateur 
-export const getInfoUser = async ( token ) => {
+// fetch pour recupérer les information utilisateur
+export const getInfoUser = async (token) => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/v1/user/profile`, {
       method: 'POST',
@@ -22,16 +24,32 @@ export const getInfoUser = async ( token ) => {
   }
 };
 
+// Thunk pour récupérer les informations utilisateur
+export const fetchUserInfo = createAsyncThunk(
+  'user/fetchUserInfo',
+  async (token, thunkAPI) => {
+    try {
+      const response = await getInfoUser(token);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 function Islogged() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const status = useSelector((state) => state.user.status);
+  const error = useSelector((state) => state.user.error);
 
-  // partie de gestion une fois log
+  useEffect(() => {
+    const token = localStorage.getItem('token'); //méthode pour obtenir le token
+    if (token && status === 'idle') {
+      dispatch(fetchUserInfo(token));
+    }
+  }, [status, dispatch]);
 
-  //dès que je suis connecter récuperer tout les information de l utilisateur pour les affichée
-  // part le route post user/profil
-
-
-  // changement des bouton et ajout du nom de l'utilisateur
 
   return (
     <>
@@ -39,7 +57,7 @@ function Islogged() {
         <h1>
           Welcome back
           <br />
-          Tony Jarvis!
+          {user ? user.firstName : '...'}!
         </h1>
         <button className="edit-button">Edit Name</button>
       </div>
