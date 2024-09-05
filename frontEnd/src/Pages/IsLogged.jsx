@@ -41,7 +41,6 @@ function Islogged() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const status = useSelector((state) => state.user.status);
-  const error = useSelector((state) => state.user.error);
 
   useEffect(() => {
     const token = localStorage.getItem('token'); //méthode pour obtenir le token
@@ -57,7 +56,7 @@ function Islogged() {
         <h1>
           Welcome back
           <br />
-          {user ? user.firstName : '...'}!
+          {user ? `${user.firstName} ${user.lastName}` : '...'}!
         </h1>
         <button className="edit-button">Edit Name</button>
       </div>
