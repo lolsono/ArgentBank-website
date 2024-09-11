@@ -1,4 +1,3 @@
-// userSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchUserInfo } from '../Pages/IsLogged'; // Assurez-vous que le chemin est correct
 
@@ -34,6 +33,11 @@ const userSlice = createSlice({
       state.token = null;
       state.error = null;
     },
+    updateUsername: (state, action) => {
+      if (state.user) {
+        state.user.username = action.payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -52,6 +56,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setToken, setError, clearUser, logout } = userSlice.actions;
+export const { setUser, setToken, setError, clearUser, logout, updateUsername } = userSlice.actions;
 
 export default userSlice.reducer;

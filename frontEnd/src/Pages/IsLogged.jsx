@@ -2,6 +2,7 @@ import { API_BASE_URL } from "./SignIn";
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import EditButton from "../components/EditButton ";
 
 // fetch pour recupérer les information utilisateur
 export const getInfoUser = async (token) => {
@@ -58,7 +59,9 @@ function Islogged() {
           <br />
           {user ? `${user.firstName} ${user.lastName}` : '...'}!
         </h1>
-        <button className="edit-button">Edit Name</button>
+
+        <EditButton />
+
       </div>
       <h2 className="sr-only">Accounts</h2>
       <section className="account">
