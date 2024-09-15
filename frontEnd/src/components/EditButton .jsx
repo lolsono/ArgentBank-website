@@ -1,20 +1,47 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUsername } from '../slices/userSlice'; // Assurez-vous que le chemin est correct
+import { updateUsername } from '../slices/userSlice'; 
+import { API_BASE_URL } from '../Pages/SignIn';
 
 const EditButton = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
+  
+   // Récupérer le token depuis le localStorage
+   const token = localStorage.getItem('token');
 
   const [isEditing, setIsEditing] = useState(false);
   const [buttonText, setButtonText] = useState('Edit Name');
   const [inputValue, setInputValue] = useState(user ? user.username : '');
 
-  const handleEditClick = () => {
+  const handleEditClick = async () => {
     if (isEditing) {
       console.log('Button clicked again!');
       console.log('Input value:', inputValue);
-      dispatch(updateUsername(inputValue));
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/v1/user/profile`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            userName: inputValue,
+          }),
+        });
+
+        if (response.ok) {
+          dispatch(updateUsername(inputValue));
+          console.log('Username updated successfully');
+          window.location.reload()
+        } else {
+          console.error('Failed to update username');
+        }
+      } catch (error) {
+        console.error('Error updating username:', error);
+      }
+
       setIsEditing(false);
       setButtonText('Edit Name');
     } else {

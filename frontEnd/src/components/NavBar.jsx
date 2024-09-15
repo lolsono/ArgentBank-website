@@ -35,7 +35,7 @@ function Navbar() {
           <>
             <Link className="main-nav-item" to="/profile">
               <FontAwesomeIcon icon={faCircleUser} />
-              {user ? `${user.firstName}` : '...'}
+              {user ? `${user.userName}` : '...'}
             </Link>
             <span className="main-nav-item" onClick={handleLogout}>
               <FontAwesomeIcon icon={faRightFromBracket} />
