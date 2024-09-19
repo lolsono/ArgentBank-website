@@ -11,7 +11,7 @@ const EditButton = () => {
    const token = localStorage.getItem('token');
 
   const [isEditing, setIsEditing] = useState(false);
-  const [buttonText, setButtonText] = useState('Edit Name');
+  const [buttonText, setButtonText] = useState('Edit username');
   const [inputValue, setInputValue] = useState(user ? user.username : '');
 
   const handleEditClick = async () => {
@@ -43,10 +43,10 @@ const EditButton = () => {
       }
 
       setIsEditing(false);
-      setButtonText('Edit Name');
+      setButtonText('Edit userame');
     } else {
       setIsEditing(true);
-      setButtonText('Save Name');
+      setButtonText('Save username');
     }
   };
 
@@ -63,7 +63,7 @@ const EditButton = () => {
         <input
           type="text"
           className="edit-input"
-          placeholder="Enter new name"
+          placeholder="Enter new username"
           value={inputValue}
           onChange={handleInputChange}
         />
