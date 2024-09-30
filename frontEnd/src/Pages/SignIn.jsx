@@ -31,10 +31,12 @@ export const handleLoginResponse = async (user, navigate) => {
   //log du resultat de le requete
   console.log("User data:", user);
 
+  //verifie si le token et present dans la réponse
   if (!user.body || !user.body.token) {
     console.error("Token is undefined in the API response");
     return;
   }
+
   // Stocker le token dans le localStorage
   await localStorage.setItem('token', user.body.token);
   console.log("Token:", localStorage.getItem('token'));
@@ -80,6 +82,7 @@ function SignIn() {
     e.preventDefault();
     if (formData.email && formData.password) {
       try {
+        //envoie de la requette fetch avec les information
         const user = await loginUser({ email: formData.email, password: formData.password });
         handleLoginResponse(user, navigate);
 
